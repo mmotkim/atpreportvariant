@@ -1,0 +1,37 @@
+{
+  "fileName": "id_1732945721154_158_propertyChange",
+  "fileType": "change",
+  "changeType": "propertyChange",
+  "moduleName": "",
+  "reference": "customer.atpreportvariant",
+  "packageName": "$TMP",
+  "content": {
+    "property": "text",
+    "newValue": "Export to PDF"
+  },
+  "selector": {
+    "id": "com.atpreport.materialstock2::sap.suite.ui.generic.template.AnalyticalListPage.view.AnalyticalListPage::Z_QUERY_MATERIALSTOCK--customer.atpreportvariant.btn-eb76d9c4",
+    "type": "sap.m.Button",
+    "idIsLocal": false
+  },
+  "layer": "CUSTOMER_BASE",
+  "texts": {},
+  "namespace": "apps/com.atpreport.materialstock2/adapt/customer.atpreportvariant/changes/",
+  "projectId": "customer.atpreportvariant",
+  "creation": "2024-11-30T05:49:14.276Z",
+  "originalLanguage": "EN",
+  "support": {
+    "generator": "@sap-ux/control-property-editor",
+    "service": "",
+    "user": "",
+    "sapui5Version": "1.108.30",
+    "sourceChangeFileName": "",
+    "compositeCommand": "",
+    "command": "property"
+  },
+  "oDataInformation": {},
+  "dependentSelector": {},
+  "jsOnly": false,
+  "variantReference": "",
+  "appDescriptorChange": false
+}
