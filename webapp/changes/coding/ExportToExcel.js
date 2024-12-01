@@ -47,7 +47,67 @@ sap.ui.define(
         console.log("onClickPdf");
         const pdfDoc = await PDFLib.PDFDocument.create();
         const page = pdfDoc.addPage([550, 750]);
+
+        //Initial Formatting
+        // Embed fonts
+        const fontBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+        const fontNormal = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+
+        let yPosition = 700;
+
+        // Add 'Available-To-Promise Report' heading (big, bold, centered)
+        const title = "Available-To-Promise Report";
+        const titleFontSize = 18;
+        const titleWidth = fontBold.widthOfTextAtSize(title, titleFontSize);
+        page.drawText(title, {
+          x: (page.getWidth() - titleWidth) / 2,
+          y: yPosition,
+          size: titleFontSize,
+          font: fontBold,
+        });
+
+        yPosition -= 30;
+
+        // Add 'Year: 2024' (left-aligned, normal text)
+        page.drawText("Year: 2024", {
+          x: 50,
+          y: yPosition,
+          size: 12,
+          font: fontNormal,
+        });
+        yPosition -= 20;
+
+        // Add 'Company Name: Yuki' (left-aligned, normal text)
+        page.drawText("Company Name: Yuki", {
+          x: 50,
+          y: yPosition,
+          size: 12,
+          font: fontNormal,
+        });
+        yPosition -= 20;
+
+        // Add 'User: LEARN-032' (left-aligned, normal text)
+        page.drawText("User: LEARN-032", {
+          x: 50,
+          y: yPosition,
+          size: 12,
+          font: fontNormal,
+        });
+        yPosition -= 20;
+
+        // Add 'Date: ' with current date (left-aligned, normal text)
+        const currentDate = new Date().toLocaleDateString();
+        page.drawText(`Date: ${currentDate}`, {
+          x: 50,
+          y: yPosition,
+          size: 12,
+          font: fontNormal,
+        });
+        yPosition -= 30;
+
         const pdfBytes = await pdfDoc.save();
+
+        // Download PDF file
         // Create a Blob from the PDF bytes
         const blob = new Blob([pdfBytes], { type: "application/pdf" });
 
