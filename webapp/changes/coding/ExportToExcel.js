@@ -17,8 +17,12 @@ sap.ui.define(
         const tableId = "com.atpreport.materialstock2::sap.suite.ui.generic.template.AnalyticalListPage.view.AnalyticalListPage::Z_QUERY_MATERIALSTOCK--table";
         var oModel = this.getView().getModel();
         var oTable = this.getView().byId(tableId);
+        console.log(this.getView().getModel().getProperty("/"))
+        console.log("oModel");
         console.log(oModel);
+        console.log("oModel.oData");
         console.log(oModel.oData);
+        console.log("oTable.getTable().getColumns()");
         console.log(oTable.getTable().getColumns());
         // console.log(oTable);
         // var oModel2 = oTable.getModel();
@@ -59,6 +63,7 @@ sap.ui.define(
             visibleColumns.push({ name: headerColValue, id: key });
           }
         }
+        console.log("visibleColumns");
         console.log(visibleColumns);
 
         const worksheetColumns = [];
@@ -68,9 +73,9 @@ sap.ui.define(
         });
 
         //initialize the rows array
-        //I fucking give up and just iterate from UI
+        //I fucking give up and just iterate from UI (uses oModel.oData)
         var allRows = oModel.oData;
-        const filteredData = Object.values(allRows).filter((item) => item.Matnr !== undefined && item.Matnr !== null);
+        var filteredData = Object.values(allRows).filter((item) => item.Matnr !== undefined && item.Matnr !== null);
         console.log(filteredData);
 
         var rowsToAdd = [];
