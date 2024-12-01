@@ -1,0 +1,40 @@
+{
+  "fileName": "id_1733070642999_159_rename",
+  "fileType": "change",
+  "changeType": "rename",
+  "moduleName": "",
+  "reference": "customer.atpreportvariant",
+  "packageName": "$TMP",
+  "content": {
+    "originalControlType": "sap.m.Button"
+  },
+  "selector": {
+    "id": "com.atpreport.materialstock2::sap.suite.ui.generic.template.AnalyticalListPage.view.AnalyticalListPage::Z_QUERY_MATERIALSTOCK--customer.atpreportvariant.btn-79b4f809",
+    "idIsLocal": false
+  },
+  "layer": "CUSTOMER_BASE",
+  "texts": {
+    "newText": {
+      "value": "Export To PDF",
+      "type": "XBUT"
+    }
+  },
+  "namespace": "apps/com.atpreport.materialstock2/adapt/customer.atpreportvariant/changes/",
+  "projectId": "customer.atpreportvariant",
+  "creation": "2024-12-01T16:30:49.419Z",
+  "originalLanguage": "EN",
+  "support": {
+    "generator": "@sap-ux/control-property-editor",
+    "service": "",
+    "user": "",
+    "sapui5Version": "1.108.30",
+    "sourceChangeFileName": "",
+    "compositeCommand": "",
+    "command": "rename"
+  },
+  "oDataInformation": {},
+  "dependentSelector": {},
+  "jsOnly": false,
+  "variantReference": "",
+  "appDescriptorChange": false
+}

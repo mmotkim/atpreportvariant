@@ -1,0 +1,5 @@
+<!-- Use stable and unique IDs!-->
+<core:FragmentDefinition xmlns:core='sap.ui.core' xmlns='sap.m'>
+    <!--  add your xml here -->
+    <Button text="New Button"  id="btn-79b4f809" press=".extension.customer.atpreportvariant.ExportToExcel.onClickPdf"></Button>
+</core:FragmentDefinition>

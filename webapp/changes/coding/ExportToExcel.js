@@ -2,53 +2,86 @@ sap.ui.define(
   [
     "sap/ui/core/mvc/ControllerExtension",
     // ,'sap/ui/core/mvc/OverrideExecution'
-    // "exceljs",
+    "exceljs",
     "pdf-lib",
   ],
   function (
     ControllerExtension,
     // ,OverrideExecution
-    // ExcelJS,
+    ExcelJS,
     PDFLib
   ) {
     "use strict";
     return ControllerExtension.extend("customer.atpreportvariant.ExportToExcel", {
       onClick: async function () {
+        var data = this.getColumnsAndRows();
+        //initialize worksheet
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet("My Sheet", {
+          pageSetup: { paperSize: 9, orientation: "landscape" },
+        });
+
+        //initial formatting
+        worksheet.mergeCells("C1", "Q7");
+        worksheet.getCell("C1").value = "Available-to-Promise Report";
+
+        //add all those data to the actual worksheet
+        worksheet.columns = data.columns;
+        worksheet.addRows(data.rows);
+        const row = worksheet.lastrow;
+
+        //download the file
+        let buffer = await workbook.xlsx.writeBuffer();
+
+        let blob2 = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+        let link2 = document.createElement("a");
+        link2.href = URL.createObjectURL(blob2);
+        link2.download = "fName.xlsx";
+        link2.click();
+        URL.revokeObjectURL(link2.href);
+      },
+
+      onClickPdf: async function () {
+        var data = this.getColumnsAndRows();
+
+        console.log("onClickPdf");
+        const pdfDoc = await PDFLib.PDFDocument.create();
+        const page = pdfDoc.addPage([550, 750]);
+        const pdfBytes = await pdfDoc.save();
+        // Create a Blob from the PDF bytes
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+        // Create a link element
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "document.pdf";
+
+        // Append the link to the body
+        document.body.appendChild(link);
+
+        // Trigger the download
+        link.click();
+
+        // Remove the link from the document
+        document.body.removeChild(link);
+        console.log(pdfBytes);
+      },
+
+      getColumnsAndRows: function () {
+        var data = {
+          columns: [],
+          rows: [],
+        };
         const tableId = "com.atpreport.materialstock2::sap.suite.ui.generic.template.AnalyticalListPage.view.AnalyticalListPage::Z_QUERY_MATERIALSTOCK--table";
         var oModel = this.getView().getModel();
         var oTable = this.getView().byId(tableId);
-        console.log(this.getView().getModel().getProperty("/"))
+        console.log(this.getView().getModel().getProperty("/"));
         console.log("oModel");
         console.log(oModel);
         console.log("oModel.oData");
         console.log(oModel.oData);
         console.log("oTable.getTable().getColumns()");
         console.log(oTable.getTable().getColumns());
-        // console.log(oTable);
-        // var oModel2 = oTable.getModel();
-        // console.log(oTable.getItems());
-        // console.log(oTable.getRows());
-        // console.log(oTable.getTable().getColumns());
-        // console.log(oTable.getItems());
-        // console.log("model");
-        // console.log(oModel);
-        // console.log(oModel.getData());
-        // console.log("data2");
-        // console.log(oTable.getModel().getData());
-        // this.getView().setModel(oModel, "tableModel");
-        // var oTable = this.getView().byId(tableId);
-        // console.log(oTable.getItems()[0].getBindingContext("id-1732831493737-15"));
-        // console.log(this.getView().getModel().getProperty(oTable.getItems()[0].getBindingContext().getPath()));
-        // console.log(oTable.getRows());
-        // console.log("table");
-        // console.log(oTable);
-        // console.log(oTable.getTableBindingPath());
-        // console.log("getTable");
-        // console.log(oTable.getTable());
-        // console.log("getTable.mAggregation");
-        // console.log(oTable.getTable().mAggregations);
-        // console.log(oTable.getTable().mAggregations.items);
-        // this.getView().setModel(attModel);
 
         //initialize the visible columns array
         var visibleColumns = [];
@@ -86,54 +119,9 @@ sap.ui.define(
         console.log("rowsToAdd");
         console.log(rowsToAdd);
 
-        const pdfDoc = await PDFLib.PDFDocument.create();
-        const page = pdfDoc.addPage([550, 750]);
-        const pdfBytes = await pdfDoc.save();
-        // Create a Blob from the PDF bytes
-        const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
-        // Create a link element
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "document.pdf";
-
-        // Append the link to the body
-        document.body.appendChild(link);
-
-        // Trigger the download
-        link.click();
-
-        // Remove the link from the document
-        document.body.removeChild(link);
-        console.log(pdfBytes);
-
-        //initialize worksheet
-        // const workbook = new ExcelJS.Workbook();
-        // const worksheet = workbook.addWorksheet("My Sheet", {
-        //   pageSetup: { paperSize: 9, orientation: "landscape" },
-        // });
-
-        // //initial formatting
-        // worksheet.mergeCells("C1", "Q7");
-        // worksheet.getCell("C1").value = "Available-to-Promise Report";
-
-        // //add all those data to the actual worksheet
-        // worksheet.columns = worksheetColumns;
-        // worksheet.addRows(rowsToAdd);
-        // const row = worksheet.lastrow;
-
-        // //download the file
-        // let buffer = await workbook.xlsx.writeBuffer();
-
-        // let blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-        // let link = document.createElement("a");
-        // link.href = URL.createObjectURL(blob);
-        // link.download = "fName.xlsx";
-        // link.click();
-        // URL.revokeObjectURL(link.href);
-
-        // //cleanup
-        // oModel.refresh();
+        data.columns = worksheetColumns;
+        data.rows = rowsToAdd;
+        return data;
       },
 
       // metadata: {
