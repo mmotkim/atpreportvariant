@@ -2,12 +2,14 @@ sap.ui.define(
   [
     "sap/ui/core/mvc/ControllerExtension",
     // ,'sap/ui/core/mvc/OverrideExecution'
-    "exceljs",
+    // "exceljs",
+    "pdf-lib",
   ],
   function (
     ControllerExtension,
     // ,OverrideExecution
-    ExcelJS
+    // ExcelJS,
+    PDFLib
   ) {
     "use strict";
     return ControllerExtension.extend("customer.atpreportvariant.ExportToExcel", {
@@ -79,33 +81,54 @@ sap.ui.define(
         console.log("rowsToAdd");
         console.log(rowsToAdd);
 
-        //initialize worksheet
-        const workbook = new ExcelJS.Workbook();
-        const worksheet = workbook.addWorksheet("My Sheet", {
-          pageSetup: { paperSize: 9, orientation: "landscape" },
-        });
+        const pdfDoc = await PDFLib.PDFDocument.create();
+        const page = pdfDoc.addPage([550, 750]);
+        const pdfBytes = await pdfDoc.save();
+        // Create a Blob from the PDF bytes
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
 
-        //initial formatting
-        worksheet.mergeCells("C1", "Q7");
-        worksheet.getCell("C1").value = "Available-to-Promise Report";
-
-        //add all those data to the actual worksheet
-        worksheet.columns = worksheetColumns;
-        worksheet.addRows(rowsToAdd);
-        const row = worksheet.lastrow;
-
-        //download the file
-        let buffer = await workbook.xlsx.writeBuffer();
-
-        let blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-        let link = document.createElement("a");
+        // Create a link element
+        const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
-        link.download = "fName.xlsx";
-        link.click();
-        URL.revokeObjectURL(link.href);
+        link.download = "document.pdf";
 
-        //cleanup
-        oModel.refresh();
+        // Append the link to the body
+        document.body.appendChild(link);
+
+        // Trigger the download
+        link.click();
+
+        // Remove the link from the document
+        document.body.removeChild(link);
+        console.log(pdfBytes);
+
+        //initialize worksheet
+        // const workbook = new ExcelJS.Workbook();
+        // const worksheet = workbook.addWorksheet("My Sheet", {
+        //   pageSetup: { paperSize: 9, orientation: "landscape" },
+        // });
+
+        // //initial formatting
+        // worksheet.mergeCells("C1", "Q7");
+        // worksheet.getCell("C1").value = "Available-to-Promise Report";
+
+        // //add all those data to the actual worksheet
+        // worksheet.columns = worksheetColumns;
+        // worksheet.addRows(rowsToAdd);
+        // const row = worksheet.lastrow;
+
+        // //download the file
+        // let buffer = await workbook.xlsx.writeBuffer();
+
+        // let blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+        // let link = document.createElement("a");
+        // link.href = URL.createObjectURL(blob);
+        // link.download = "fName.xlsx";
+        // link.click();
+        // URL.revokeObjectURL(link.href);
+
+        // //cleanup
+        // oModel.refresh();
       },
 
       // metadata: {

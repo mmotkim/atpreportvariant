@@ -20,6 +20,7 @@
         "start-editor": "fiori run --open /test/adaptation-editor.html"
     },
     "dependencies": {
-        "exceljs": "^4.4.0"
+        "exceljs": "^4.4.0",
+        "pdf-lib": "^1.17.1"
     }
 }
