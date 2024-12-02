@@ -1,0 +1,37 @@
+{
+  "fileName": "id_1733135169307_210_propertyBindingChange",
+  "fileType": "change",
+  "changeType": "propertyBindingChange",
+  "moduleName": "",
+  "reference": "customer.atpreportvariant",
+  "packageName": "$TMP",
+  "content": {
+    "property": "enabled",
+    "newBinding": "{/propertyName}"
+  },
+  "selector": {
+    "id": "com.atpreport.materialstock2::sap.suite.ui.generic.template.AnalyticalListPage.view.AnalyticalListPage::Z_QUERY_MATERIALSTOCK--customer.atpreportvariant.btn-ee23afb9",
+    "type": "sap.m.Button",
+    "idIsLocal": false
+  },
+  "layer": "CUSTOMER_BASE",
+  "texts": {},
+  "namespace": "apps/com.atpreport.materialstock2/adapt/customer.atpreportvariant/changes/",
+  "projectId": "customer.atpreportvariant",
+  "creation": "2024-12-02T10:26:10.351Z",
+  "originalLanguage": "EN",
+  "support": {
+    "generator": "@sap-ux/control-property-editor",
+    "service": "",
+    "user": "",
+    "sapui5Version": "1.108.30",
+    "sourceChangeFileName": "",
+    "compositeCommand": "",
+    "command": "bindProperty"
+  },
+  "oDataInformation": {},
+  "dependentSelector": {},
+  "jsOnly": false,
+  "variantReference": "",
+  "appDescriptorChange": false
+}
